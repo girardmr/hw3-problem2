@@ -105,7 +105,7 @@ mask_background = roipoly(log_compressed_rect);
 
 %rect
 lesion_rect = mask_lesion.*log_compressed_rect;
-background_rect = mask_background.*log_compressed_rect;
+background_rect = mask_background.*log_compressed_rect
 mean_lesion_rect = mean(mean(lesion_rect));
 mean_background_rect = mean(mean(background_rect));
 var_lesion_rect = var(lesion_rect(:));
@@ -114,24 +114,3 @@ contrast_rect = -20*log10(mean_lesion_rect/mean_background_rect)
 CNR_rect = abs(mean_lesion_rect-mean_background_rect)/...
     (var_lesion_rect^2+var_background_rect^2)^0.5
 
-%blackman
-lesion_bl = mask_lesion.*log_compressed_bl;
-background_bl = mask_background.*log_compressed_bl;
-mean_lesion_bl = mean(mean(lesion_bl));
-mean_background_bl = mean(mean(background_bl));
-var_lesion_bl = var(lesion_bl(:));
-var_background_bl = var(background_bl(:));
-contrast_bl = -20*log10(mean_lesion_bl/mean_background_bl)
-CNR_bl = abs(mean_lesion_bl-mean_background_bl)/...
-    (var_lesion_bl^2+var_background_bl^2)^0.5
-
-%kaiser
-lesion_k = mask_lesion.*log_compressed_k;
-background_k = mask_background.*log_compressed_k;
-mean_lesion_k = mean(mean(lesion_k));
-mean_background_k = mean(mean(background_k));
-var_lesion_k = var(lesion_k(:));
-var_background_k = var(background_k(:));
-contrast_k = -20*log10(mean_lesion_k/mean_background_k)
-CNR_k = abs(mean_lesion_k-mean_background_k)/...
-    (var_lesion_k^2+var_background_k^2)^0.5
