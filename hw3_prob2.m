@@ -1,5 +1,4 @@
 clear all;
-close all;
 clc;
 
 load('anecoicCystData.mat');
@@ -32,6 +31,7 @@ data_matrix = data;
 
 for ii = 1:(length(channel))
     xe(ii) = 0.1953e-3*abs(channel(ii)); 
+    lateral_array(ii) = 0.1953e-3*channel(ii);
     d(ii) = (xe(ii)^2+depth^2)^0.5 + depth;
     time_to_point(ii) = d(ii)/speed;
 end
@@ -46,6 +46,7 @@ end
 
 
 end
+axial_array = [1:rows_data_matrix]*pixel_size_through_depth;
 
 
 for ll = 1:numel(delayed_channel)
@@ -66,7 +67,7 @@ data_rect = delayed_channel.*apod_rect;
 summed_channels = sum(data_rect,2);
 log_compressed_rect = 20*log10(abs(hilbert(summed_channels(:,:))));
 figure;
-imagesc(log_compressed_rect,[-50 0]);
+imagesc(lateral_array, axial_array,log_compressed_rect,[30 80]);
 axis image;
 colormap('gray');
 title('Rectangular aperture');
@@ -79,7 +80,7 @@ data_blackman = delayed_channel.*apod_blackman;
 summed_channels_bl = sum(data_blackman,2);
 log_compressed_bl = 20*log10(abs(hilbert(summed_channels_bl(:,:))));
 figure;
-imagesc(log_compressed_bl,[-50 0]);
+imagesc(lateral_array, axial_array,log_compressed_bl,[30 80]);
 axis image;
 colormap('gray');
 title('Blackman window');
@@ -92,7 +93,7 @@ data_k = delayed_channel.*apod_k;
 summed_channels_k = sum(data_k,2);
 log_compressed_k = 20*log10(abs(hilbert(summed_channels_k(:,:))));
 figure;
-imagesc(log_compressed_k,[-50 0]);
+imagesc(lateral_array, axial_array,log_compressed_k,[30 80]);
 axis image;
 colormap('gray');
 title('Kaiser window');
